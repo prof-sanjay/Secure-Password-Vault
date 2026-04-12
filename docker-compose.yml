@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  vm_node_1:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "5001:5000"
+    container_name: shamir_vm_1
+
+  vm_node_2:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "5002:5000"
+    container_name: shamir_vm_2
+
+  vm_node_3:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "5003:5000"
+    container_name: shamir_vm_3
+
+  vm_node_4:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "5004:5000"
+    container_name: shamir_vm_4
+
+  vm_node_5:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "5005:5000"
+    container_name: shamir_vm_5

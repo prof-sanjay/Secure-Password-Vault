@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3>AES-256 Shamir Secret Sharing</h3>
+    <a href="{{ url_for('dashboard') }}" class="btn">🔙 Return to Vault</a>
+</div>
+
+<div style="background-color: #0d1117; padding: 25px; border-radius: 8px; border: 1px solid #30363d; margin-bottom: 30px;">
+    <p>Generate emergency fallback tokens by destroying your operational memory AES-key mathematically across multiple geometric nodes. These base64 encoded strings act as recovery fragments.</p>
+
+    <form method="POST" action="/backup">
+        <div style="display: flex; gap: 20px;">
+            <div class="form-group" style="flex: 1;">
+                <label for="k">Minimal Threshold (k)</label>
+                <input type="number" name="k" id="k" required min="1" placeholder="Minimum shares needed to recover">
+            </div>
+            
+            <div class="form-group" style="flex: 1;">
+                <label for="n">Total Combinations Generated (n)</label>
+                <input type="number" name="n" id="n" required min="1" placeholder="Total chunks derived">
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="background-color: #d29922; color: #161b22; width: 100%; font-weight: bold;">Calculate Shamir Matrices</button>
+    </form>
+</div>
+
+{% if shares %}
+<div style="background-color: #1f2428; padding: 20px; border-radius: 5px; border-left: 5px solid #d29922;">
+    <h3 style="color: #d29922; margin-top: 0;">CAUTION: Recovery Fragments Verified</h3>
+    <p>Please store these outputs disconnected from each other. At least "k" combinations physically pasted into the recovery prompt will decrypt the vault automatically via Lagrange interpolation.</p>
+    
+    <div style="font-family: monospace; font-size: 13px; color: #58a6ff; white-space: pre-wrap; word-wrap: break-word; background: #000; padding: 15px; border-radius: 4px;">
+{% for share in shares %}{{ share }}
+{% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 0 auto; text-align: center;">
+    {% if vault_exists %}
+        <h3>Master Authentication Required</h3>
+        <p>Your vault is secured. Please provide your master password.</p>
+    {% else %}
+        <h3>Welcome! System Initialization</h3>
+        <p>No vault found. The password you enter below will geometrically structure and seal a new vault.</p>
+    {% endif %}
+
+    <form method="POST" action="/" style="margin-top: 25px; text-align: left;">
+        <div class="form-group">
+            <label for="master_password">Master Password</label>
+            <input type="password" name="master_password" id="master_password" required autofocus autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px;">
+            {% if vault_exists %}Decrypt Vault{% else %}Create Vault{% endif %}
+        </button>
+    </form>
+    
+    {% if attempts is defined and (attempts > 0 or calc_time > 0) %}
+    <div style="margin-top: 20px; text-align: left; padding: 15px; border-radius: 6px; background-color: #161b22; border: 1px solid #30363d; font-size: 13px; color: #8b949e;">
+        <h4 style="margin-top: 0; color: #c9d1d9; font-size: 14px; margin-bottom: 12px;">Security Engine Metrics</h4>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>Argon2id Key Derivation Computation:</span>
+            <span style="color: #58a6ff; font-family: monospace;">{% if calc_time > 0 %}{{ "%.3f"|format(calc_time) }}s{% else %}0.000s{% endif %}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>Argon2id Memory Hardness Allocation:</span>
+            <span style="color: #bc8cff; font-family: monospace;">{% if calc_time > 0 %}{{ memory_mb }} MB{% else %}0.0 MB{% endif %}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <span>Total Failed Decryption Attempts:</span>
+            <span style="color: {% if attempts > 0 %}#f85149{% else %}#3fb950{% endif %}; font-family: monospace; font-weight: bold;">{{ attempts }}</span>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div style="margin-top: 30px; border-top: 1px solid #30363d; padding-top: 20px;">
+        <p style="font-size: 13px; color: #8b949e;">Lost your master password?</p>
+        <a href="{{ url_for('recover') }}" class="btn">Shamir Integrity Recovery</a>
+    </div>
+</div>
+{% endblock %}

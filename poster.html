@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Poster</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f3e8;
+            /* Light beige/yellow background to match */
+            color: #000;
+        }
+
+        .poster-container {
+            width: 1200px;
+            margin: 0 auto;
+            background-color: #f7f3e8;
+        }
+
+        /* --- Header Section --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 25%;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #666;
+            text-align: center;
+        }
+
+        .university-info {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .university-info strong {
+            font-size: 16px;
+            color: #8b0000;
+        }
+
+        .header-center {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .header-center h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .header-center h1 {
+            margin: 5px 0 0;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            text-align: right;
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .qr-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            border: 2px dashed #000;
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        /* --- Main Content Grid --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            /* Middle column is wider */
+            gap: 20px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin: 0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+        }
+
+        /* Card Colors */
+        .card-blue {
+            background-color: #d8f1f5;
+        }
+
+        .card-indigo {
+            background-color: #e5def3;
+        }
+
+        .card-salmon {
+            background-color: #fbd6ce;
+        }
+
+        .card-orange {
+            background-color: #fcd5a8;
+        }
+
+        .card-pink {
+            background-color: #fae1f7;
+        }
+
+        .card-white {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        /* --- Custom Middle Column Layout --- */
+        .architecture-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .diagram-placeholder {
+            width: 100%;
+            height: 250px;
+            background-color: #e0e0e0;
+            border: 2px dashed #999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .mid-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="poster-container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <div class="logo-placeholder">LOGO HERE</div>
+                <div class="university-info">
+                    <strong>YOUR UNIVERSITY</strong><br>
+                    School of Computing<br>
+                    City, State, Zip, Country<br>
+                    Email: user@example.edu
+                </div>
+            </div>
+            <div class="header-center">
+                <h2>TEAM XX</h2>
+                <h1>DISTRIBUTED KEY MANAGEMENT SYSTEM</h1>
+            </div>
+            <div class="header-right">
+                PROJECT FEEDBACK
+                <div class="qr-placeholder">QR CODE</div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="grid-container">
+
+            <!-- LEFT COLUMN -->
+            <div class="column">
+                <!-- Box 1: Objective -->
+                <div class="card card-blue">
+                    <h3>Objective</h3>
+                    <ul>
+                        <li><strong>Implement cryptographic hardening</strong> utilizing Argon2id for memory-hard key
+                            derivation to securely protect the primary access vault.</li>
+                        <li><strong>Integrate AES-GCM authenticated encryption</strong> to ensure data
+                            confidentiality and integrity checks for all stored credentials.</li>
+                        <li><strong>Develop a fault-tolerant recovery mechanism</strong> leveraging Shamir's Secret
+                            Sharing to mathematically distribute the master decryption key.</li>
+                        <li><strong>Distribute cryptographic shares across isolated Virtual Machines (VMs)</strong>,
+                            systematically eliminating single points of failure within the backup infrastructure.</li>
+                        <li><strong>Evaluate algorithmic resilience</strong> against offline dictionary and brute-force
+                            attacks to validate the operational integrity of the security model.</li>
+                    </ul>
+                </div>
+
+                <!-- Box 2: Problem Statement (Replaces Contributions) -->
+                <div class="card card-indigo">
+                    <h3>Problem Statement</h3>
+                    <ul>
+                        <li><strong>Single Point of Failure:</strong> Centralized vaults are permanently lost if the
+                            master key is forgotten.</li>
+                        <li><strong>Brute-Force Risk:</strong> Without rate-limiting, local vaults can be brute-forced.
+                        </li>
+                        <li><strong>Memory Leaks:</strong> Decrypted AES keys remaining in RAM pose a major session
+                            hijacking risk.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MIDDLE COLUMN -->
+            <div class="column">
+
+                <!-- Architecture Diagram Section -->
+                <div class="card-white" style="background: transparent; box-shadow: none;">
+                    <div class="architecture-title">High-Level System Architecture: SSS and VM Distribution</div>
+                    <div class="diagram-placeholder">
+                        [Insert High-Level System Architecture Diagram Here]
+                    </div>
+                </div>
+
+                <div class="mid-grid">
+                    <!-- Implementation Details -->
+                    <div class="card card-salmon">
+                        <h3>Implementation</h3>
+                        <ul>
+                            <li><strong>Cryptographic Core:</strong> AES-256 for vault storage (`vault.json`) and
+                                Argon2id for resilient key derivation.</li>
+                            <li><strong>Secret Splitting:</strong> The Shamir’s Secret Sharing algorithm divides the
+                                master key into <em>n</em> distinct shares.</li>
+                            <li><strong>VM Broker Network:</strong> The application distributes the generated shares
+                                strictly across independent Virtual Machines, never locally.</li>
+                            <li><strong>Recovery Protocol:</strong> Automatically reconstructs the master key by
+                                querying VMs over secure TLS. Requires a threshold <em>k</em> to succeed.</li>
+                            <li><strong>Active Mitigations:</strong> Artificial login delays, and
+                                mathematically enforced 5-minute RAM wiping timeouts.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-white" style="background: transparent; box-shadow: none;">
+                        <div class="diagram-placeholder" style="height: 100%;">
+                            [Insert Implementation Flowchart / VM Network Topology Diagram Here]
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="column">
+
+                <!-- Box 3: Results / Pros & Cons -->
+                <div class="card card-orange">
+                    <h3>Results / Pros & Cons</h3>
+                    <ul>
+                        <li><strong>Fault Tolerance:</strong> System survives hardware failures (up to <em>n - k</em>
+                            offline VMs) without losing data.</li>
+                        <li><strong>Zero-Knowledge:</strong> Neither the central server nor individual VMs can
+                            reconstruct the key autonomously.</li>
+                        <li><strong>Defense in Depth:</strong> Defends against network sniffing (HTTPS) and application
+                            layer attacks (auto-timeout).</li>
+                        <li><strong>Overhead Cost:</strong> Maintaining multiple VMs increases infrastructure and
+                            administrative complexity.</li>
+                        <li><strong>Network Dependency:</strong> Recovery is impossible without stable network access to
+                            reach the VM threshold.</li>
+                    </ul>
+                </div>
+
+                <!-- Box 4: Conclusion -->
+                <div class="card card-pink">
+                    <h3>Conclusion</h3>
+                    <p style="font-size: 14px; line-height: 1.6; margin: 0 10px;">
+                        This project successfully balances absolute local cryptographic security with practical
+                        usability. By integrating Shamir's Secret Sharing with a distributed Virtual Machine
+                        infrastructure, the system eliminates the devastating localized consequences of a forgotten
+                        master password. The multi-layered approach—combining Argon2id, AES-256, explicit RAM wiping,
+                        and network TLS—ensures the credential vault remains impenetrable to single-point compromises,
+                        delivering a robust solution for organizational and individual password management.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

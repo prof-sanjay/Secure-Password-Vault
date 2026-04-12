@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3>Inject New Login Envelope</h3>
+    <a href="{{ url_for('dashboard') }}" class="btn">🔙 Return Pipeline</a>
+</div>
+
+<form method="POST" action="/add" style="max-width: 500px; padding: 20px; border: 1px solid #30363d; border-radius: 8px; background: #0d1117;">
+    <div class="form-group">
+        <label for="website">Website Destination</label>
+        <input type="text" name="website" id="website" required autocomplete="off" placeholder="e.g. google.com">
+    </div>
+    
+    <div class="form-group">
+        <label for="username">Associated Application Username</label>
+        <input type="text" name="username" id="username" required autocomplete="off" placeholder="e.g. j.doe@email.com">
+    </div>
+    
+    <div class="form-group">
+        <label for="password">Password Mnemonic to Secure internally</label>
+        <!-- Not masked in UI input to ensure accuracy, but type attribute defaults to password natively. -->
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <input type="password" name="password" id="password" required autocomplete="off" placeholder="Type password clearly..." style="flex: 1;" oninput="checkStrength(this.value)">
+            <button type="button" class="btn" style="background-color: #2ea043; border-radius: 5px;" onclick="generatePassword()">🎲 Generate Password</button>
+        </div>
+        <div id="strength_display" style="font-size: 13px; margin-top: 5px; color: #8b949e;">Password strength: <strong id="strength_value">None</strong></div>
+    </div>
+
+<script>
+async function checkStrength(pwd) {
+    if(!pwd) {
+        document.getElementById('strength_value').innerText = "None";
+        document.getElementById('strength_value').style.color = "#8b949e";
+        return;
+    }
+    
+    // Evaluate strength locally
+    let score = 0;
+    if (pwd.length >= 8) score += 1;
+    if (pwd.length >= 12) score += 1;
+    if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) score += 1;
+    if (/\d/.test(pwd)) score += 1;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(pwd)) score += 1;
+    
+    let strength = "Weak";
+    let color = "#da3633"; // red
+    
+    if (score >= 4) {
+        strength = "Strong";
+        color = "#3ab73a"; // green
+    } else if (score >= 3) {
+        strength = "Medium";
+        color = "#d29922"; // yellow
+    }
+    
+    document.getElementById('strength_value').innerText = strength;
+    document.getElementById('strength_value').style.color = color;
+}
+
+// Minimal Generate Logic mapping to a Python generator 
+async function generatePassword() {
+    try {
+        let length = prompt("Configure password length (Minimum 12):", "16");
+        // Ensure user didn't cancel prompt
+        if (length === null) return;
+        
+        let reqLength = parseInt(length);
+        if (isNaN(reqLength) || reqLength < 8) reqLength = 16;
+        
+        const response = await fetch('/api/generate_password?length=' + reqLength);
+        const data = await response.json();
+        
+        if (data.password) {
+            let pwdField = document.getElementById('password');
+            pwdField.type = 'text'; // Show to user temporarily
+            pwdField.value = data.password;
+            checkStrength(data.password);
+        }
+    } catch(err) {
+        console.error("Generator failed", err);
+    }
+}
+</script>
+    
+    <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Encrypt & Seal Payload</button>
+</form>
+{% endblock %}

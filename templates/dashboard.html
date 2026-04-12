@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>Stored Cryptographic Credentials</h3>
+    <div>
+        <a href="{{ url_for('backup') }}" class="btn" style="background-color: #d29922; color: #161b22; font-weight: bold;">⚙️ Generate Backup</a>
+    </div>
+</div>
+
+{% if entries|length == 0 %}
+    <p style="text-align: center; color: #8b949e; margin-top: 50px;">The secure container is empty. Start adding passwords.</p>
+{% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Destination URI</th>
+                <th>User Account</th>
+                <th>Credentials (Masked)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><strong style="color: #58a6ff;">{{ entry.website }}</strong></td>
+                <td>{{ entry.username }}</td>
+                <td>
+                    <span class="masked" id="disp_{{ loop.index }}">••••••••••••••••</span>
+                    <button type="button" class="btn" style="margin-left: 10px; padding: 4px 8px; font-size: 12px; background-color: #30363d; color: #c9d1d9;" onclick="togglePassword('disp_{{ loop.index }}', 'pwd_{{ loop.index }}', event)">👁 Show</button>
+                    <button class="btn btn-primary" style="margin-left: 5px; padding: 4px 8px; font-size: 12px;" 
+                            id="pwd_{{ loop.index }}" data-secret="{{ entry.password }}" 
+                            onclick="copyPassword('pwd_{{ loop.index }}')">📋 Copy
+                    </button>
+                </td>
+                <td style="text-align: center;">
+                    <form action="{{ url_for('delete', index=loop.index) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Obliterate entry permanently? Recovery impossible.');">
+                        <button type="submit" class="btn btn-danger" style="padding: 4px 10px;">🗑 Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

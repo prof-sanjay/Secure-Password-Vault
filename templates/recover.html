@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3>Mathematical Override Strategy</h3>
+    <a href="{{ url_for('login') }}" class="btn">🔙 Abandon Mission</a>
+</div>
+
+<div style="max-width: 600px; padding: 25px; border-radius: 8px; background: #0d1117; border: 1px solid #30363d;">
+    <p>Please supply at least 'k' geometric vectors exactly down into the lines below (one fragment string per line).</p>
+
+    <form method="POST" action="/recover">
+        <div class="form-group" style="margin-bottom: 25px;">
+            <label for="shares">Shamir Combinational Shares (Paste exactly, line-break per share):</label>
+            <textarea name="shares" id="shares" rows="6" required style="font-family: monospace; font-size: 12px; background: #000; padding: 15px; border-color: #d29922; color: #58a6ff;" placeholder="1:v72F...&#10;2:R32i...&#10;3:b4sK..."></textarea>
+            <button type="button" class="btn" style="background-color: #238636; color: white; margin-top: 10px; width: 100%; border: none; padding: 10px; cursor: pointer;" onclick="fetchVMShares(this)">📡 Fetch Keys from Virtual Machines</button>
+        </div>
+        
+        <div style="padding-top: 20px; border-top: 1px solid #30363d; margin-bottom: 20px;">
+            <p><strong>RECOVERY ACCEPTANCE REQUIREMENT:</strong> The old AES boundary has been voided by this action. Decrypted content must automatically map to a brand new Master Password constraint. Please explicitly assign it here.</p>
+            <div class="form-group">
+                <label for="new_password">New Master Password Boundary:</label>
+                <input type="password" name="new_password" id="new_password" required placeholder="Type a brand new, secure master password...">
+            </div>
+        </div>
+
+        <button type="submit" class="btn" style="background-color: #da3633; color: white; width: 100%; font-size: 16px; font-weight: bold; padding: 12px;">Override & Rebuild AES Key</button>
+    </form>
+</div>
+</div>
+
+<script>
+function fetchVMShares(btn) {
+    btn.innerText = "⏳ Connecting to Virtual Machines over Network...";
+    btn.style.backgroundColor = "#d29922";
+    
+    fetch('/api/fetch_shares')
+        .then(response => response.json())
+        .then(data => {
+            if (data.shares) {
+                document.getElementById('shares').value = data.shares.join('\n');
+                btn.innerText = "✅ Successfully Retrieved All Shards from VMs!";
+                btn.style.backgroundColor = "#238636";
+            } else {
+                btn.innerText = "❌ Network Error: VMs Offline";
+                btn.style.backgroundColor = "#da3633";
+                alert(data.error || "Failed to fetch keys from VMs");
+            }
+        })
+        .catch(err => {
+            btn.innerText = "❌ Network Error";
+            btn.style.backgroundColor = "#da3633";
+        });
+}
+</script>
+{% endblock %}
